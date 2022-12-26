@@ -1,0 +1,147 @@
+swagger: '2.0'
+info:
+  title: Math API
+  version: 1.0.0
+  description: A simple API for performing mathematical operations
+host: localhost:8989
+basePath: /
+schemes:
+  - http
+
+paths:
+  /login:
+    post:
+      summary: Logs a user in and creates a session
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+              password:
+                type: string
+            required:
+              - username
+              - password
+      responses:
+        '200':
+          description: Successful login
+          headers:
+            Set-Cookie:
+              type: string
+              description: session_token=899e68f9-e862-4737-9264-bbff78a5ff8a; Expires=Sun, 25 Dec 2022 22:33:48 GMT
+        '400':
+          description: if no body in request
+        '401':
+          description: Invalid username or password
+      security: [ ]
+
+  /add:
+    post:
+      summary: Adds two numbers
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              x:
+                type: number
+              y:
+                type: number
+            required:
+              - x
+              - y
+      responses:
+        '200':
+          description: Sum of the two numbers
+          schema:
+            type: string
+            example: 3 + 3 = 6
+        '400':
+          description: if no body in request
+        '401':
+          description: Invalid username or password
+      security:
+        - apiKey: [ ]
+        - group: []
+
+  /multiply:
+    post:
+      summary: Multiplies two numbers
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              x:
+                type: number
+              y:
+                type: number
+            required:
+              - x
+              - y
+      responses:
+        '200':
+          description: Product of the two numbers
+          schema:
+            type: string
+            example: 3 * 3 = 9
+        '400':
+          description: if no body in request
+        '401':
+          description: Invalid username or password
+      security:
+        - apiKey: [ ]
+        - group:
+            - group_A
+
+
+  /exponent:
+    post:
+      summary: Exponential one number to the power of another
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              x:
+                type: number
+              y:
+                type: number
+            required:
+              - x
+              - y
+      responses:
+        '200':
+          description: Result of exponentiation x to the power of y
+          schema:
+            type: string
+            example: 3 ^ 3 = 27
+        '400':
+          description: if no body in request
+        '401':
+          description: Invalid username or password
+      security:
+        - apiKey: [ ]
+        - group:
+            - group_B
+
+
+securityDefinitions:
+  ApiKeyAuth:
+    type: apiKey
+    in: header
+    name: Cookie
+
+
+security:
+  - group: [ ]
